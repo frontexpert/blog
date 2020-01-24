@@ -137,8 +137,8 @@
   samp {
     padding: 0 5px;
     border-radius: 4px;
-    font-family: var(--font-brandon);
-    font-style: normal;
+    font-family: inherit;
+    font-style: inherit;
     color: var(--color-black);
     background: var(--color-light-blue);
   }
