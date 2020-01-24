@@ -41,7 +41,7 @@ involved our community is and can’t wait to share more with you:
   [Nabanita Dash](https://twitter.com/explorer_07) for organizing a cool
   DVC-themed hackathon!
 
-  https://twitter.com/psociiit/status/1185150096792535040?s=20
+  https://twitter.com/psociiit/status/1185150096792535040
 
 - We’ve crossed 4k stars mark on [Github](https://github.com/iterative/dvc)!
 

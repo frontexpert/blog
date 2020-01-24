@@ -68,14 +68,14 @@ Some other highlights of the end of summer:
   ([over 3,500 now](https://github.com/iterative/dvc)). Thank you for your
   support!
 
-  https://twitter.com/DVCorg/status/1147220439472545793?s=20
+  https://twitter.com/DVCorg/status/1147220439472545793
 
 - We’ve had great time at the
   [Open Source Summit](https://events.linuxfoundation.org/events/open-source-summit-north-america-2019/program/)
   by Linux foundation in San Diego — speaking on stage, running a booth and
   chatting with all the amazing open-source crowd out there.
 
-  https://twitter.com/a142hr/status/1164256520235675648?s=20
+  https://twitter.com/a142hr/status/1164256520235675648
 
 ![](/uploads/images/2019-09-26/open-source-summit-by-linux-foundation.jpeg)
 
