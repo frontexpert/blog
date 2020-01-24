@@ -76,6 +76,11 @@
   }
 
   h1 {
+    b,
+    strong {
+      font-weight: 700;
+    }
+
     @media (--md-scr) {
       @mixin h1-mobile;
 
@@ -90,6 +95,11 @@
   }
 
   h2 {
+    b,
+    strong {
+      font-weight: 700;
+    }
+
     @media (--md-scr) {
       @mixin h2-mobile;
 
@@ -104,6 +114,11 @@
   }
 
   h3 {
+    b,
+    strong {
+      font-weight: 700;
+    }
+
     margin: 60px 0 15px;
 
     @media (--md-scr) {
