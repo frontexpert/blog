@@ -49,18 +49,6 @@
     font-weight: 500;
   }
 
-  code,
-  kbd,
-  samp {
-    @media (--md-scr) {
-      font-size: 16px;
-    }
-
-    @media (--lg-scr) {
-      font-size: 20px;
-    }
-  }
-
   :global(.gatsby-resp-image-wrapper) + em {
     @mixin text-secondary;
 
@@ -130,7 +118,6 @@
   blockquote:not(:global(.twitter-tweet)) {
     margin: 30px 0;
     padding-left: 25px;
-    font-style: italic;
     position: relative;
 
     &::before {
@@ -150,7 +137,7 @@
   samp {
     padding: 0 5px;
     border-radius: 4px;
-    font-family: var(--font-mono);
+    font-family: var(--font-brandon);
     font-style: normal;
     color: var(--color-black);
     background: var(--color-light-blue);
