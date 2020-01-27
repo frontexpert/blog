@@ -135,9 +135,18 @@
     border-radius: 4px;
     font-style: inherit;
     line-height: 1.6em;
-    font-size: 0.84em;
+    font-size: 0.74em;
     color: var(--color-black);
     background: var(--color-light-blue);
+  }
+
+  h1,
+  h2,
+  h3 {
+    code {
+      line-height: 1.8em;
+      font-size: 0.84em;
+    }
   }
 
   ol,
@@ -216,6 +225,10 @@
     @mixin link;
 
     word-wrap: break-word;
+
+    code {
+      color: var(--color-blue);
+    }
   }
 
   pre {
@@ -290,6 +303,8 @@
       min-width: 100%;
       padding: 0;
       color: #a0a0a0;
+      font-size: 0.74em;
+      line-height: 1.6em;
     }
 
     :global {
