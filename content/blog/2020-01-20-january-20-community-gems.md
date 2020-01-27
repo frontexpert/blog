@@ -60,6 +60,36 @@ $ dvc remote modify myremote keyfile <path to *.pem>
 You can specify a directory as a dependency/output in your DVC pipeline, and
 store checkpointed models in that directory. It might look like this:
 
+--- **TEST** ---
+
+# H1 Title with `code`, **bold**, _italic_
+
+## H2 Title with `code`, **bold**, _italic_
+
+### H3 Title with [hyper link](https://example.com) `welcome test code` and **bold text** and _italic test_
+
+### H3 Title with [hyper link => **bold => _italic => `quote: welcome test code` end_**](https://example.com)
+
+Paragraph with `quote: welcome test code`, **bold**, _italic_ <br> Paragraph for
+styling test with `welcome test code` and **bold text** and _italic test_ <br>
+Paragraph for styling test with **bold => `quote: welcome test code` end** <br>
+Paragraph for styling test with _italic => **bold => `quote: welcome test code`
+end**_ <br> Paragraph for styling test with **bold => _italic =>
+`quote: welcome test code` end_** <br> Paragraph for styling test with
+`quote => _italic => **bold: welcome test code** end_` <br> Paragraph for
+styling test with
+[hyper link => **bold => _italic => `quote: welcome test code` end_**](https://example.com)
+<br>
+
+> Quote for styling test with `welcome test code` and **bold text** and _italic
+> test_ <br> Quote for styling test with **bold => `quote: welcome test code`
+> end** <br> Quote for styling test with _italic => **bold =>
+> `quote: welcome test code` end**_ <br> Quote for styling test with **bold =>
+> _italic => `quote: welcome test code` end_** <br> Quote for styling test with
+> `quote => _italic => **bold: welcome test code** end_` <br> Quote for styling
+> test with
+> [hyper link => **bold => _italic => `quote: welcome test code` end_**](https://example.com)
+
 ```dvc
 fatal: The current branch change_alice has no upstream branch.
 To push the current branch and set the remote as upstream, use
@@ -131,25 +161,6 @@ that project to your workspace.
 If you prefer to be even more granular, you can `dvc add` files individually.
 Then you can use `dvc pull <filename>.dvc` to retrieve the outputs specified
 only by that file.
-
---- **TEST** ---
-
-# H1 Title with `code`, **bold**, _italic_
-
-## H2 Title with `code`, **bold**, _italic_
-
-### H3 Title with [hyper link](https://example.com) `welcome test code` and **bold text** and _italic test_
-
-### H3 Title with [hyper link => **bold => _italic => `quote: welcome test code` end_**](https://example.com)
-
-paragraph with `quote: welcome test code`, **bold**, _italic_
-
-> quote for styling test with `welcome test code` and **bold text** and _italic
-> test_ quote for styling test with **bold => `quote: welcome test code` end**
-> quote for styling test with _italic => **bold => `quote: welcome test code`
-> end**_ quote for styling test with **bold => _italic =>
-> `quote: welcome test code` end_** quote for styling test with
-> `quote => _italic => **bold: welcome test code** end_`
 
 ### Q: [Is it possible to set an S3 remote without the use of AWS credentials with DVC?](https://discordapp.com/channels/485586884165107732/563406153334128681/623234659098296348) I want to publicly host a dataset so that everybody who clones my code repo can just run `dvc pull` to fetch the dataset.
 
