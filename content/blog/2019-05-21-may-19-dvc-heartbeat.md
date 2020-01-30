@@ -54,8 +54,6 @@ conference.
 
 ![](/uploads/images/2019-05-21/the-world-is-changing.png)
 
-![](/uploads/images/2019-05-21/the-world-is-changing.png 'title =300x500')
-
 While we were busy finalizing all the PyCon 2019 prep, our own
 [Dmitry Petrov](https://twitter.com/FullStackML) flew to New York to speak at
 the
