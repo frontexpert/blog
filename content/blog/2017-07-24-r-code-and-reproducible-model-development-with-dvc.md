@@ -179,11 +179,11 @@ only steps marked red on a picture below:
 
 ![](/uploads/images/2017-07-24/marked-steps.png)
 
-![Alt text](/uploads/images/2017-07-24/marked-steps.png 'Optional Title =300x400')
+![Alt text](/uploads/images/2017-07-24/marked-steps.png 'Optional Title =300x200')
 
-![Alt text](/uploads/images/2017-07-24/marked-steps.png 'Optional Title =600x300')
+![Alt text](/uploads/images/2017-07-24/marked-steps.png 'Optional Title =600x400')
 
-![Alt text](/uploads/images/2017-07-24/marked-steps.png 'Optional Title =300')
+![Alt text](/uploads/images/2017-07-24/marked-steps.png 'Optional Title =400')
 
 ![Alt text](/uploads/images/2017-07-24/marked-steps.png '=200')
 
