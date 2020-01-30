@@ -60,6 +60,16 @@
     }
   }
 
+  :global(.gatsby-resp-image-wrapper) {
+    picture {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
   :global(.gatsby-resp-image-link) {
     @mixin active;
 

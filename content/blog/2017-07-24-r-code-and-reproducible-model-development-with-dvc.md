@@ -179,6 +179,14 @@ only steps marked red on a picture below:
 
 ![](/uploads/images/2017-07-24/marked-steps.png)
 
+![Alt text](/uploads/images/2017-07-24/marked-steps.png 'Optional Title =300x400')
+
+![Alt text](/uploads/images/2017-07-24/marked-steps.png 'Optional Title =600x300')
+
+![Alt text](/uploads/images/2017-07-24/marked-steps.png 'Optional Title =300')
+
+![Alt text](/uploads/images/2017-07-24/marked-steps.png '=200')
+
 DVC knows based on DAG graph that changed `train_model.R` file will only change
 following files: `Glmnet.RData` and `Evaluation.txt`. If we want to see our new
 results we need to execute only `train_model.R` and `evaluate.R job`. It is cool
