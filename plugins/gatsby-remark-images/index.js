@@ -441,13 +441,16 @@ module.exports = function(_ref, pluginOptions) {
 
           case 46:
             ratio = (1 / fluidResult.aspectRatio) * 100 + '%';
-            if (width !== '100%')
+            if (width !== '100%') {
+              var width$ =
+                parseInt(width.split('px')[0]) < 700
+                  ? parseInt(width.split('px')[0])
+                  : 700;
               ratio =
                 height === '100%'
-                  ? (1 / fluidResult.aspectRatio) *
-                      parseInt(width.split('px')[0]) +
-                    'px'
+                  ? (1 / fluidResult.aspectRatio) * width$ + 'px'
                   : height;
+            }
             wrapperStyle =
               typeof options.wrapperStyle === 'function'
                 ? options.wrapperStyle(fluidResult)
@@ -502,7 +505,7 @@ module.exports = function(_ref, pluginOptions) {
               rawHTML = (
                 '\n  <a\n    class="gatsby-resp-image-link"\n    href="' +
                 originalImg +
-                '"\n    style="display: flex; justify-content: center;"\n    target="_blank"\n    rel="noopener"\n  >\n    ' +
+                '"\n    target="_blank"\n    rel="noopener"\n  >\n    ' +
                 rawHTML +
                 '\n  </a>\n    '
               ).trim();

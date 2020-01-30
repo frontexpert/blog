@@ -1,5 +1,3 @@
-'use strict';
-
 exports.DEFAULT_OPTIONS = {
   maxWidth: 650,
   wrapperStyle: '',

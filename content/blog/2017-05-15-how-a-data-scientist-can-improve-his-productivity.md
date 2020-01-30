@@ -153,7 +153,13 @@ using a simple command:
 $ dvc sync data/
 ```
 
-![](/uploads/images/2017-05-15/git-server-or-github.jpeg)
+![Alt text](/uploads/images/2017-05-15/git-server-or-github.jpeg 'Title text')
+
+![Alt text](/uploads/images/2017-05-15/git-server-or-github.jpeg 'Title text =400x200')
+
+![Alt text](/uploads/images/2017-05-15/git-server-or-github.jpeg 'Title text =200')
+
+![](/uploads/images/2017-05-15/git-server-or-github.jpeg '=800')
 
 Currently, AWS S3 and GCP storage are supported by DVC.
 

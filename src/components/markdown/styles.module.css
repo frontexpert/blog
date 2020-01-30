@@ -73,6 +73,9 @@
   :global(.gatsby-resp-image-link) {
     @mixin active;
 
+    display: flex !important;
+    justify-content: center;
+
     &:hover,
     &:focus {
       outline: none;

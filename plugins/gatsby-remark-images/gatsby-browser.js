@@ -1,5 +1,3 @@
-'use strict';
-
 var _require = require('./constants'),
   DEFAULT_OPTIONS = _require.DEFAULT_OPTIONS,
   imageClass = _require.imageClass,
