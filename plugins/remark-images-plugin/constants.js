@@ -11,6 +11,7 @@ exports.DEFAULT_OPTIONS = {
   disableBgImageOnAlpha: false,
   disableBgImage: false
 };
+
 exports.imageClass = 'gatsby-resp-image-image';
 exports.imageWrapperClass = 'gatsby-resp-image-wrapper';
 exports.imageBackgroundClass = 'gatsby-resp-image-background-image';
