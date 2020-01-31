@@ -9,7 +9,7 @@ var _require = require('./constants'),
   imageClass = _require.imageClass,
   imageBackgroundClass = _require.imageBackgroundClass,
   imageWrapperClass = _require.imageWrapperClass,
-  maxWidth = _require.maxWidth;
+  maxWidth = _require.DEFAULT_OPTIONS.maxWidth;
 
 var visitWithParents = require('unist-util-visit-parents');
 var getDefinitions = require('mdast-util-definitions');
@@ -27,7 +27,7 @@ var Promise = require('bluebird');
 var cheerio = require('cheerio');
 var _require3 = require('gatsby-core-utils'),
   slash = _require3.slash;
-var chalk = require('chalk'); 
+var chalk = require('chalk');
 
 module.exports = function(_ref, pluginOptions) {
   var files = _ref.files,
@@ -284,9 +284,11 @@ module.exports = function(_ref, pluginOptions) {
             title = node.title ? _.escape(node.title) : alt;
             var size = title.split('=').length > 1 ? title.split('=')[1] : '';
             title = title.split('=')[0].trim();
-            width = size ? size.split('x')[0] + 'px' : '100%';
+            width = size ? size.split('x')[0].trim() + 'px' : '100%';
             height =
-              size.split('x').length > 1 ? size.split('x')[1] + 'px' : '100%';
+              size.split('x').length > 1
+                ? size.split('x')[1].trim() + 'px'
+                : '100%';
             loading = options.loading;
 
             if (!['lazy', 'eager', 'auto'].includes(loading)) {
