@@ -52,7 +52,8 @@
     "react-use": "^13.6.3",
     "rehype-parse": "^6.0.2",
     "rehype-stringify": "^6.0.1",
-    "unist-util-visit": "^2.0.1"
+    "unist-util-visit": "^2.0.1",
+    "query-string": "^6.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -73,7 +74,6 @@
     "gatsby-plugin-tslint": "^0.0.2",
     "gatsby-plugin-typescript": "^2.1.26",
     "gatsby-remark-copy-linked-files": "^2.1.36",
-    "gatsby-remark-images": "^3.1.42",
     "gatsby-remark-prismjs": "^3.3.30",
     "gatsby-remark-responsive-iframe": "^2.2.31",
     "gatsby-remark-smartypants": "^2.1.20",

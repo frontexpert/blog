@@ -1,7 +1,4 @@
-'use strict';
-
 var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault');
-
 var _regenerator = _interopRequireDefault(
   require('@babel/runtime/regenerator')
 );
@@ -11,18 +8,13 @@ var _require = require('./constants'),
   imageClass = _require.imageClass,
   imageBackgroundClass = _require.imageBackgroundClass,
   imageWrapperClass = _require.imageWrapperClass,
-  maxWidth = _require.maxWidth;
+  maxWidth = _require.DEFAULT_OPTIONS.maxWidth;
 
 var visitWithParents = require('unist-util-visit-parents');
-
 var getDefinitions = require('mdast-util-definitions');
-
 var path = require('path');
-
 var queryString = require('query-string');
-
 var isRelativeUrl = require('is-relative-url');
-
 var _ = require('lodash');
 
 var _require2 = require('gatsby-plugin-sharp'),
@@ -31,18 +23,11 @@ var _require2 = require('gatsby-plugin-sharp'),
   traceSVG = _require2.traceSVG;
 
 var Promise = require('bluebird');
-
 var cheerio = require('cheerio');
-
 var _require3 = require('gatsby-core-utils'),
   slash = _require3.slash;
 
-var chalk = require('chalk'); // If the image is relative (not hosted elsewhere)
-// 1. Find the image file
-// 2. Find the image's size
-// 3. Filter out any responsive image fluid sizes that are greater than the image's width
-// 4. Create the responsive images.
-// 5. Set the html w/ aspect ratio helper.
+var chalk = require('chalk');
 
 module.exports = function(_ref, pluginOptions) {
   var files = _ref.files,
