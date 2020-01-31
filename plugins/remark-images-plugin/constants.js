@@ -1,5 +1,5 @@
 exports.DEFAULT_OPTIONS = {
-  maxWidth: 650,
+  maxWidth: 700,
   wrapperStyle: '',
   backgroundColor: 'white',
   linkImagesToOriginal: true,

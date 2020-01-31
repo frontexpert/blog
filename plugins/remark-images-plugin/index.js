@@ -10,7 +10,8 @@ var _require = require('./constants'),
   DEFAULT_OPTIONS = _require.DEFAULT_OPTIONS,
   imageClass = _require.imageClass,
   imageBackgroundClass = _require.imageBackgroundClass,
-  imageWrapperClass = _require.imageWrapperClass;
+  imageWrapperClass = _require.imageWrapperClass,
+  maxWidth = _require.maxWidth;
 
 var visitWithParents = require('unist-util-visit-parents');
 
@@ -443,9 +444,9 @@ module.exports = function(_ref, pluginOptions) {
             ratio = (1 / fluidResult.aspectRatio) * 100 + '%';
             if (width !== '100%') {
               var width$ =
-                parseInt(width.split('px')[0]) < 700
+                parseInt(width.split('px')[0]) < maxWidth
                   ? parseInt(width.split('px')[0])
-                  : 700;
+                  : maxWidth;
               ratio =
                 height === '100%'
                   ? (1 / fluidResult.aspectRatio) * width$ + 'px'
