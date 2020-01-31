@@ -54,7 +54,7 @@ const plugins = [
           resolve: 'gatsby-remark-relative-images'
         },
         {
-          resolve: 'remark-images-plugin',
+          resolve: 'external-remark-images',
           options: {
             maxWidth: 700,
             withWebp: true
