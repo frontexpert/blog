@@ -284,9 +284,11 @@ module.exports = function(_ref, pluginOptions) {
             title = node.title ? _.escape(node.title) : alt;
             var size = title.split('=').length > 1 ? title.split('=')[1] : '';
             title = title.split('=')[0].trim();
-            width = size ? size.split('x')[0] + 'px' : '100%';
+            width = size ? size.split('x')[0].trim() + 'px' : '100%';
             height =
-              size.split('x').length > 1 ? size.split('x')[1] + 'px' : '100%';
+              size.split('x').length > 1
+                ? size.split('x')[1].trim() + 'px'
+                : '100%';
             loading = options.loading;
 
             if (!['lazy', 'eager', 'auto'].includes(loading)) {
