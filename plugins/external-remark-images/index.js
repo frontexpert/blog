@@ -108,7 +108,7 @@ const rawHTML = ({
           />
           <img
             class="gatsby-resp-image-image"
-            src="${fluidResult.fallbackSrc}"
+            src="${fluidResult.src}"
             alt="${alt}"
             title="${title}"
             loading="lazy"
