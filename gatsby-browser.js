@@ -6,7 +6,9 @@ exports.onRouteUpdate = () => {
   for (let i = 0; i < imageWrappers.length; i++) {
     const imageWrapper = imageWrappers[i];
 
-    const backgroundElement = imageWrapper.querySelector(`.gatsby-resp-image-background-image`);
+    const backgroundElement = imageWrapper.querySelector(
+      `.gatsby-resp-image-background-image`
+    );
     const imageElement = imageWrapper.querySelector(`.gatsby-resp-image-image`);
 
     const onImageLoad = () => {

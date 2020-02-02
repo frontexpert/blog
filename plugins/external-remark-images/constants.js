@@ -4,7 +4,7 @@ exports.DEFAULT_OPTIONS = {
   linkImagesToOriginal: true,
   markdownCaptions: false,
   withWebp: true,
-  loading: 'lazy',
+  loading: 'lazy'
 };
 
 exports.imageClass = 'gatsby-resp-image-image';

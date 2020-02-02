@@ -29,15 +29,7 @@ const getImageInfo = uri => {
 };
 
 module.exports = (
-  {
-    files,
-    markdownNode,
-    markdownAST,
-    pathPrefix,
-    getNode,
-    reporter,
-    cache,
-  },
+  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
   pluginOptions
 ) => {
   const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS);
@@ -48,21 +40,20 @@ module.exports = (
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
   let rawHtmlNodes = [];
-  visitWithParents(markdownAST, `html`, (node) => {
+  visitWithParents(markdownAST, `html`, node => {
     rawHtmlNodes.push(node);
   });
 
   // This will only work for markdown syntax image tags
   let markdownImageNodes = [];
 
-  visitWithParents(markdownAST, [`image`, `imageReference`], (node) => {
+  visitWithParents(markdownAST, [`image`, `imageReference`], node => {
     markdownImageNodes.push(node);
-  }
-  );
+  });
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function (
+  const generateImagesAndUpdateNode = async function(
     node,
     resolve,
     overWrites = {}
@@ -169,9 +160,10 @@ module.exports = (
 
     if (width) {
       const maxWidth = width < options.maxWidth ? width : options.maxWidth;
-      ratio = height < presentationHeight
-        ? height + 'px'
-        : (1 / fluidResult.aspectRatio) * maxWidth + 'px';
+      ratio =
+        height < presentationHeight
+          ? height + 'px'
+          : (1 / fluidResult.aspectRatio) * maxWidth + 'px';
     }
 
     const rawHTML = `
@@ -207,7 +199,11 @@ module.exports = (
               alt="${alt}"
               title="${title}"
               loading="${loading}"
-              style="width: ${width < presentationWidth ? width + 'px' : '100%'}; height: ${height < presentationHeight ? height + 'px' : '100%'}; margin: 0; vertical-align: middle;"
+              style="width: ${
+                width < presentationWidth ? width + 'px' : '100%'
+              }; height: ${
+      height < presentationHeight ? height + 'px' : '100%'
+    }; margin: 0; vertical-align: middle;"
             />
           </picture>
         </a>
@@ -220,7 +216,7 @@ module.exports = (
   return Promise.all(
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
-      (node) =>
+      node =>
         new Promise(async (resolve, reject) => {
           const overWrites = {};
           let refNode;
@@ -274,7 +270,7 @@ module.exports = (
     Promise.all(
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
-        (node) =>
+        node =>
           new Promise(async (resolve, reject) => {
             if (!node.value) {
               return resolve();
@@ -287,7 +283,7 @@ module.exports = (
             }
 
             let imageRefs = [];
-            $(`img`).each(function () {
+            $(`img`).each(function() {
               imageRefs.push($(this));
             });
 
@@ -313,7 +309,7 @@ module.exports = (
               ) {
                 const rawHTML = await generateImagesAndUpdateNode(
                   formattedImgTag,
-                  resolve,
+                  resolve
                 );
 
                 if (rawHTML) {

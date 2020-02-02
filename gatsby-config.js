@@ -56,7 +56,7 @@ const plugins = [
         {
           resolve: 'external-remark-images',
           options: {
-            maxWidth: 700,
+            maxWidth: 700
           }
         },
         'gatsby-remark-responsive-iframe',
