@@ -1,9 +1,3 @@
-const {
-  DEFAULT_OPTIONS,
-  imageClass,
-  imageBackgroundClass,
-  imageWrapperClass
-} = require(`./constants`);
 const visitWithParents = require(`unist-util-visit-parents`);
 const getDefinitions = require(`mdast-util-definitions`);
 const path = require(`path`);
@@ -14,7 +8,12 @@ const { fluid } = require(`gatsby-plugin-sharp`);
 const Promise = require(`bluebird`);
 const cheerio = require(`cheerio`);
 const { slash } = require(`gatsby-core-utils`);
-const chalk = require(`chalk`);
+
+const DEFAULT_OPTIONS = {
+  maxWidth: 700,
+  markdownCaptions: false,
+  withWebp: true,
+};
 
 const getImageInfo = uri => {
   const { url, query } = queryString.parseUrl(uri);
@@ -27,6 +26,99 @@ const getImageInfo = uri => {
     query
   };
 };
+
+const rawHTML = ({
+  node,
+  fluidResult,
+  webpFluidResult,
+  options,
+  overWrites
+}) => {
+  // Generate default alt tag
+  const srcSplit = getImageInfo(node.url).url.split(`/`);
+  const fileName = srcSplit[srcSplit.length - 1];
+  const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``);
+  const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `);
+
+  const alt = _.escape(
+    overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
+  );
+
+  const nodeTitle = node.title ? _.escape(node.title) : alt;
+
+  let title = nodeTitle
+    .trim()
+    .replace(/=\d{2,4}x\d{2,4}|=\d{2,4}/gi, ' ')
+    .trim();
+
+  if (!title) {
+    title = alt;
+  }
+
+  const resize = nodeTitle.trim().match(/=\d{2,4}x\d{2,4}|=\d{2,4}/gi);
+
+  let width = null;
+  let height = null;
+
+  if (resize) {
+    const [w, h] = resize[0].replace(/^(.)/g, '').split('x');
+    width = w;
+    height = h;
+  }
+
+  let ratio = `${(1 / fluidResult.aspectRatio) * 100}%`;
+
+  if (width) {
+    const maxWidth = width < options.maxWidth ? width : options.maxWidth;
+    ratio =
+      height < fluidResult.presentationHeight
+        ? height + 'px'
+        : (1 / fluidResult.aspectRatio) * maxWidth + 'px';
+  }
+
+  const imageWith = width < fluidResult.presentationWidth ? width + 'px' : '100%';
+  const imageHeight = height < fluidResult.presentationHeight ? height + 'px' : '100%'
+
+  return `
+    <span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: ${fluidResult.presentationWidth}px;"
+    >
+      <a
+        class="gatsby-resp-image-link"
+        href="${fluidResult.originalImg}"
+        style="display: block"
+        target="_blank"
+        rel="noopener"
+      >
+      <span
+        class="gatsby-resp-image-background-image"
+        style="width: ${width}px; padding-bottom: ${ratio}; background-image: url('${fluidResult.base64}'); background-size: cover; position: relative; bottom: 0; left: 0; display: block;"
+      ></span>
+        <picture>
+          <source
+            srcset="${webpFluidResult.srcSet}"
+            sizes="${webpFluidResult.sizes}"
+            type="${webpFluidResult.srcSetType}"
+          />
+          <source
+            srcset="${fluidResult.srcSet}"
+            sizes="${fluidResult.sizes}"
+            type="${fluidResult.srcSetType}"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="${fluidResult.fallbackSrc}"
+            alt="${alt}"
+            title="${title}"
+            loading="lazy"
+            style="width: ${imageWith}; height: ${imageHeight}; margin: 0; vertical-align: middle;"
+          />
+        </picture>
+      </a>
+    </span>
+    `.trim();
+}
 
 module.exports = (
   { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
@@ -53,7 +145,7 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function(
+  const generateImagesAndUpdateNode = async function (
     node,
     resolve,
     overWrites = {}
@@ -81,7 +173,7 @@ module.exports = (
       return resolve();
     }
 
-    let fluidResult = await fluid({
+    const fluidResult = await fluid({
       file: imageNode,
       args: options,
       reporter,
@@ -90,56 +182,6 @@ module.exports = (
 
     if (!fluidResult) {
       return resolve();
-    }
-
-    const originalImg = fluidResult.originalImg;
-    const fallbackSrc = fluidResult.src;
-    const srcSet = fluidResult.srcSet;
-    const presentationWidth = fluidResult.presentationWidth;
-    const presentationHeight = fluidResult.presentationHeight;
-
-    // Generate default alt tag
-    const srcSplit = getImageInfo(node.url).url.split(`/`);
-    const fileName = srcSplit[srcSplit.length - 1];
-    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``);
-    const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `);
-
-    const alt = _.escape(
-      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
-    );
-
-    const nodeTitle = node.title ? _.escape(node.title) : alt;
-
-    let title = nodeTitle
-      .trim()
-      .replace(/=\d{2,4}x\d{2,4}|=\d{2,4}/gi, ' ')
-      .trim();
-
-    if (!title) {
-      title = alt;
-    }
-
-    const resize = nodeTitle.trim().match(/=\d{2,4}x\d{2,4}|=\d{2,4}/gi);
-
-    let width = null;
-    let height = null;
-
-    if (resize) {
-      const [w, h] = resize[0].replace(/^(.)/g, '').split('x');
-      width = w;
-      height = h;
-    }
-
-    const loading = options.loading;
-
-    if (![`lazy`, `eager`, `auto`].includes(loading)) {
-      reporter.warn(
-        reporter.stripIndent(`
-        ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
-          `loading`
-        )} option. Please pass one of "lazy", "eager" or "auto".
-      `)
-      );
     }
 
     const webpFluidResult = await fluid({
@@ -154,63 +196,13 @@ module.exports = (
       reporter
     });
 
-    let placeholderImageData = fluidResult.base64;
-
-    let ratio = `${(1 / fluidResult.aspectRatio) * 100}%`;
-
-    if (width) {
-      const maxWidth = width < options.maxWidth ? width : options.maxWidth;
-      ratio =
-        height < presentationHeight
-          ? height + 'px'
-          : (1 / fluidResult.aspectRatio) * maxWidth + 'px';
-    }
-
-    const rawHTML = `
-      <span
-        class="${imageWrapperClass}"
-        style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: ${presentationWidth}px;"
-      >
-        <a
-          class="gatsby-resp-image-link"
-          href="${originalImg}"
-          style="display: block"
-          target="_blank"
-          rel="noopener"
-        >
-        <span
-          class="${imageBackgroundClass}"
-          style="width: ${width}px; padding-bottom: ${ratio}; background-image: url('${placeholderImageData}'); background-size: cover; position: relative; bottom: 0; left: 0; display: block;"
-        ></span>
-          <picture>
-            <source
-              srcset="${webpFluidResult.srcSet}"
-              sizes="${webpFluidResult.sizes}"
-              type="${webpFluidResult.srcSetType}"
-            />
-            <source
-              srcset="${srcSet}"
-              sizes="${fluidResult.sizes}"
-              type="${fluidResult.srcSetType}"
-            />
-            <img
-              class="${imageClass}"
-              src="${fallbackSrc}"
-              alt="${alt}"
-              title="${title}"
-              loading="${loading}"
-              style="width: ${
-                width < presentationWidth ? width + 'px' : '100%'
-              }; height: ${
-      height < presentationHeight ? height + 'px' : '100%'
-    }; margin: 0; vertical-align: middle;"
-            />
-          </picture>
-        </a>
-      </span>
-      `.trim();
-
-    return rawHTML;
+    return rawHTML({
+      node,
+      overWrites,
+      fluidResult,
+      webpFluidResult,
+      options
+    });
   };
 
   return Promise.all(
@@ -283,7 +275,7 @@ module.exports = (
             }
 
             let imageRefs = [];
-            $(`img`).each(function() {
+            $(`img`).each(function () {
               imageRefs.push($(this));
             });
 
