@@ -1,24 +1,13 @@
-const {
-  DEFAULT_OPTIONS,
-  imageClass,
-  imageBackgroundClass,
-  imageWrapperClass
-} = require(`./plugins/external-remark-images/constants`);
-
-exports.onRouteUpdate = (_, pluginOptions) => {
-  const options = Object.assign({}, DEFAULT_OPTIONS, pluginOptions);
-
-  const imageWrappers = document.querySelectorAll(`.${imageWrapperClass}`);
+exports.onRouteUpdate = () => {
+  const imageWrappers = document.querySelectorAll(`.gatsby-resp-image-wrapper`);
 
   // https://css-tricks.com/snippets/javascript/loop-queryselectorall-matches/
   // for cross-browser looping through NodeList without polyfills
   for (let i = 0; i < imageWrappers.length; i++) {
     const imageWrapper = imageWrappers[i];
 
-    const backgroundElement = imageWrapper.querySelector(
-      `.${imageBackgroundClass}`
-    );
-    const imageElement = imageWrapper.querySelector(`.${imageClass}`);
+    const backgroundElement = imageWrapper.querySelector(`.gatsby-resp-image-background-image`);
+    const imageElement = imageWrapper.querySelector(`.gatsby-resp-image-image`);
 
     const onImageLoad = () => {
       backgroundElement.style.transition = `opacity 0.5s 0.5s`;
@@ -30,7 +19,7 @@ exports.onRouteUpdate = (_, pluginOptions) => {
       backgroundElement.style.opacity = 0;
       imageElement.style.opacity = 1;
       imageElement.style.color = `inherit`;
-      imageElement.style.boxShadow = `inset 0px 0px 0px 400px ${options.backgroundColor}`;
+      imageElement.style.boxShadow = `inset 0px 0px 0px 400px white`;
       imageElement.removeEventListener(`load`, onImageLoad);
       imageElement.removeEventListener(`error`, onImageComplete);
     };

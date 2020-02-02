@@ -1,15 +1,10 @@
 exports.DEFAULT_OPTIONS = {
   maxWidth: 700,
-  wrapperStyle: '',
   backgroundColor: 'white',
   linkImagesToOriginal: true,
-  showCaptions: false,
   markdownCaptions: false,
-  withWebp: false,
-  tracedSVG: false,
+  withWebp: true,
   loading: 'lazy',
-  disableBgImageOnAlpha: false,
-  disableBgImage: false
 };
 
 exports.imageClass = 'gatsby-resp-image-image';
