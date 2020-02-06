@@ -107,8 +107,9 @@ export const pageQuery = graphql`
         }
         picture {
           childImageSharp {
-            fluid(maxWidth: 850, cropFocus: CENTER) {
+            fluid(maxWidth: 850) {
               ...GatsbyImageSharpFluid_withWebp
+              presentationWidth
             }
           }
         }
