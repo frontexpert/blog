@@ -1,5 +1,7 @@
+const { MAX_WIDTH_IMAGES } = require('./plugins/config/constants');
 const path = require('path');
 require('./config/prismjs/dvc');
+
 
 const title = 'Data Version Control · DVC';
 const keywords =
@@ -56,7 +58,7 @@ const plugins = [
         {
           resolve: 'gatsby-remark-images',
           options: {
-            maxWidth: 700,
+            maxWidth: MAX_WIDTH_IMAGES,
             withWebp: true
           }
         },

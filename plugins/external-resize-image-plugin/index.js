@@ -19,6 +19,7 @@ const {
   convertHtmlToHast,
   convertHastToHtml
 } = require('../utils/convertHast');
+const { MAX_WIDTH_IMAGES } = require('../config/constants');
 
 const extractResize = str => {
   const regexResize = /=\d{2,4}/g;
@@ -52,13 +53,28 @@ module.exports = ({ markdownAST }) => {
           ...
     */
     wrapperImageList.forEach(wrapperImage => {
+      const source = select(`picture > source`, wrapperImage);
       const image = select(`.${imageClass}`, wrapperImage);
 
       const { resize, title } = extractResize(image.properties.title);
 
+      const originalSize = source.properties.srcSet
+        .pop()
+        .split(' ')[1]
+        .replace('w', '');
+
       const maxWidth = wrapperImage.properties.style
         .match(regexMaxWidth)[0]
         .replace(/\D/g, '');
+
+      if (MAX_WIDTH_IMAGES * 2 > originalSize) {
+        // If original image size not enough for the retina display,
+        // add max-width 1/2 px
+        wrapperImage.properties.style = wrapperImage.properties.style.replace(
+          regexMaxWidth,
+          `max-width: ${originalSize / 2}px`
+        );
+      }
 
       if (resize) {
         const width = resize[0].replace('=', '');
