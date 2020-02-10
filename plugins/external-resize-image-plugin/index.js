@@ -19,7 +19,7 @@ const {
   convertHtmlToHast,
   convertHastToHtml
 } = require('../utils/convertHast');
-const { MAX_WIDTH_IMAGES } = require('../config/constants');
+const { MAX_WIDTH_MARKDOWN_IMAGES } = require('../config/constants');
 
 const extractResize = str => {
   const regexResize = /=\d{2,4}/g;

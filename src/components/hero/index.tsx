@@ -14,12 +14,13 @@ interface IFluidObject {
   tracedSVG?: string;
   srcWebp?: string;
   srcSetWebp?: string;
-  presentationWidth?: string;
+  presentationWidth?: number;
 }
 
 interface IGatsbyImageProps {
   sizes?: IFluidObject;
   fluid?: IFluidObject;
+  picture?: IFluidObject;
   fadeIn?: boolean;
   title?: string;
   alt?: string;
@@ -35,14 +36,21 @@ interface IGatsbyImageProps {
   Tag?: string;
 }
 
+import { MAX_WIDTH_HERO_IMAGE } from '../../../plugins/config/constants';
+
 function NonStretchedImage(props: IGatsbyImageProps) {
+  const presetantionWidth = props.fluid?.presentationWidth;
+  const width =
+    presetantionWidth < MAX_WIDTH_HERO_IMAGE
+      ? presetantionWidth / 2
+      : presetantionWidth;
   let normalizedProps = props;
   if (props.fluid && props.fluid.presentationWidth) {
     normalizedProps = {
       ...props,
       style: {
         ...(props.style || {}),
-        maxWidth: props.fluid.presentationWidth,
+        maxWidth: width,
         margin: '0 auto'
       }
     };
@@ -54,12 +62,6 @@ function Hero({ pictureComment, picture }: IBlogPostFrontmatter) {
   return (
     <div className={styles.pictureWrapper}>
       <div className={styles.picture}>
-        <div
-          className={styles.pictureBackground}
-          style={{
-            backgroundImage: `url(${picture?.childImageSharp.fluid.src})`
-          }}
-        />
         <NonStretchedImage fluid={picture?.childImageSharp.fluid} />
       </div>
       {pictureComment && (
